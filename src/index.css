@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colores Institucionales UPRIT */
+  --color-uprit-red: #92001F;
+  --color-uprit-lightRed: #D58B8F;
+  --color-uprit-gray: #5E5254;
+  --color-uprit-bg: #FAF6F7;
+
+  /* Fuente Geist */
+  --font-geist: 'Geist', sans-serif;
+}
+
+/* Reset básico para el fondo de página */
+body {
+  background-color: var(--color-uprit-bg);
+  color: var(--color-uprit-gray);
+}
