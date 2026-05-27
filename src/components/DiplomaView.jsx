@@ -4,26 +4,27 @@ import diplomasData from '../data/diplomas.json';
 
 export default function DiplomaView() {
   const { code } = useParams();
+  const normalizedCode = code?.trim().toUpperCase() ?? '';
 
-  // Búsqueda en el JSON
-  const student = diplomasData.find(item => item.registro === code);
+  const student = diplomasData.find(item => item.registro === normalizedCode);
 
-  // Datos del alumno
   const studentName = student ? student.nombre : '……………………………………';
-  const diplomaCodeDisplay = student ? student.registro : (code || '……-FJEI-2026');
-  
-  const pdfUrl = `/certificados/${diplomaCodeDisplay}.pdf`; 
+  const diplomaCodeDisplay = student ? student.registro : (normalizedCode || '……-FJEI-2026');
+
+  const pdfUrl = `/diplomado/${diplomaCodeDisplay}.pdf`;
+  const isValid = Boolean(student);
 
   return (
     <div className="min-h-screen bg-uprit-bg font-geist flex flex-col items-center py-10 px-4 md:px-0">
       
-      {/* Banner Superior de Verificación (Opcional pero recomendado para UX) */}
-      <div className="w-full max-w-3xl bg-green-50 p-3 rounded-lg border border-green-200 flex items-center justify-center gap-2 mb-6 shadow-sm">
-        <CheckCircle className="text-green-600 w-5 h-5 flex-shrink-0" />
-        <p className="text-sm text-green-800">
-           Documento verificado en la base de datos oficial.
-        </p>
-      </div>
+      {isValid && (
+        <div className="w-full max-w-3xl bg-green-50 p-3 rounded-lg border border-green-200 flex items-center justify-center gap-2 mb-6 shadow-sm">
+          <CheckCircle className="text-green-600 w-5 h-5 flex-shrink-0" />
+          <p className="text-sm text-green-800">
+            Documento verificado en la base de datos oficial.
+          </p>
+        </div>
+      )}
 
       {/* EL DIPLOMA: Imita una hoja A4 con un borde interno */}
       <main className="w-full max-w-3xl bg-white shadow-2xl relative flex flex-col items-center">
@@ -114,16 +115,17 @@ export default function DiplomaView() {
         </div>
       </main>
 
-      {/* BOTÓN DESCARGA (Fuera del papel, abajo) */}
-      <div className="mt-8 mb-10">
-        <a 
-          href={pdfUrl} 
-          download 
-          className="bg-uprit-red hover:bg-red-900 text-white font-bold py-3 px-8 rounded flex items-center gap-3 transition-colors shadow-md active:scale-95 text-sm md:text-base"
-        >
-          <FileDown size={20} /> DESCARGAR PDF OFICIAL
-        </a>
-      </div>
+      {isValid && (
+        <div className="mt-8 mb-10">
+          <a
+            href={pdfUrl}
+            download={`${diplomaCodeDisplay}.pdf`}
+            className="bg-uprit-red hover:bg-red-900 text-white font-bold py-3 px-8 rounded flex items-center gap-3 transition-colors shadow-md active:scale-95 text-sm md:text-base"
+          >
+            <FileDown size={20} /> DESCARGAR PDF OFICIAL
+          </a>
+        </div>
+      )}
 
     </div>
   );

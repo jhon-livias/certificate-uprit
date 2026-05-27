@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/((?!diplomado/|logo/|assets/|favicon\\.svg|icons\\.svg).*)", "destination": "/index.html" }
+  ]
+}
