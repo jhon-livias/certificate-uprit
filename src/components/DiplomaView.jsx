@@ -1,19 +1,176 @@
+import { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FileDown, CheckCircle, ShieldCheck, BadgeCheck, ArrowLeft, AlertCircle } from 'lucide-react';
+import { FileDown, CheckCircle, ShieldCheck, BadgeCheck, ArrowLeft, AlertCircle, Lock, IdCard } from 'lucide-react';
 import diplomasData from '../data/diplomas.json';
+
+async function sha256(text) {
+  const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
 
 export default function DiplomaView() {
   const { code } = useParams();
   const navigate = useNavigate();
-  const normalizedCode = code?.trim().toUpperCase() ?? '';
+  const normalizedCode = code?.trim().toUpperCase().replace(/\.PDF$/, '') ?? '';
+
+  const [dniInput, setDniInput] = useState('');
+  const [verified, setVerified] = useState(false);
+  const [verifyError, setVerifyError] = useState(false);
+  const [attempts, setAttempts] = useState(0);
+  const [downloading, setDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState(false);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (code && /\.pdf$/i.test(code.trim())) {
+      navigate(`/fedatario-juramentado/${normalizedCode}`, { replace: true });
+    }
+  }, [code, normalizedCode, navigate]);
+
+  const handleVerify = async (e) => {
+    e.preventDefault();
+    const record = diplomasData.find(item => item.registro === normalizedCode);
+    const dni = dniInput.trim();
+    const hash = await sha256(dni + ':' + normalizedCode);
+    if (record && record.dniHash === hash) {
+      setVerified(true);
+      setVerifyError(false);
+    } else {
+      setAttempts(prev => prev + 1);
+      setVerifyError(true);
+      setDniInput('');
+      setTimeout(() => inputRef.current?.focus(), 50);
+    }
+  };
+
+  if (!verified) {
+    return (
+      <div className="min-h-screen bg-[#F2EFE9] font-geist flex flex-col items-center justify-center py-8 px-4">
+        <div className="w-full max-w-sm">
+
+          {/* Cabecera */}
+          <div className="flex flex-col items-center mb-8">
+            <div className="bg-uprit-red rounded p-2 shadow-md mb-4">
+              <img src="/logo/logo.svg" alt="logo-uprit" width={110} />
+            </div>
+            <p className="text-[10px] text-uprit-gray/40 uppercase tracking-[0.25em] text-center">
+              Universidad Privada de Trujillo
+            </p>
+          </div>
+
+          {/* Tarjeta de verificación */}
+          <div className="bg-white shadow-xl rounded-xl overflow-hidden">
+            <div className="h-1.5 w-full bg-uprit-red" />
+            <div className="h-px w-full bg-[#C9A227]" />
+
+            <div className="p-8">
+              <div className="flex flex-col items-center mb-6">
+                <div className="border-2 border-uprit-gray/20 rounded-full p-4 mb-4">
+                  <Lock className="w-7 h-7 text-uprit-gray/50" />
+                </div>
+                <h2 className="text-lg font-extrabold text-uprit-gray uppercase tracking-widest text-center">
+                  Verificación requerida
+                </h2>
+                <p className="text-xs text-gray-400 text-center mt-2 leading-relaxed">
+                  Ingresa tu DNI para acceder al diploma asociado al código{' '}
+                  <span className="font-mono font-bold text-uprit-gray">{normalizedCode || '—'}</span>
+                </p>
+              </div>
+
+              <form onSubmit={handleVerify} className="flex flex-col gap-4">
+                <div>
+                  <label className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.25em] mb-1.5 block">
+                    Número de DNI
+                  </label>
+                  <div className="relative">
+                    <IdCard className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" />
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      inputMode="numeric"
+                      maxLength={12}
+                      value={dniInput}
+                      onChange={e => { setDniInput(e.target.value.replace(/\D/g, '')); setVerifyError(false); }}
+                      placeholder="Ej: 12345678"
+                      autoFocus
+                      className={`w-full pl-9 pr-4 py-3 border rounded-lg font-mono text-sm text-uprit-gray tracking-widest outline-none transition-all
+                        ${verifyError
+                          ? 'border-red-400 bg-red-50 focus:ring-2 focus:ring-red-300'
+                          : 'border-gray-200 bg-gray-50 focus:border-uprit-red focus:ring-2 focus:ring-uprit-red/20'
+                        }`}
+                    />
+                  </div>
+                  {verifyError && (
+                    <div className="flex items-center gap-1.5 mt-2">
+                      <AlertCircle className="w-3.5 h-3.5 text-red-500 flex-shrink-0" />
+                      <p className="text-xs text-red-500">
+                        DNI incorrecto o diploma no encontrado.
+                        {attempts >= 3 && ' Verifica que el código QR sea el correcto.'}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={dniInput.length < 7}
+                  className="bg-uprit-red hover:bg-red-900 disabled:bg-gray-200 disabled:cursor-not-allowed text-white disabled:text-gray-400 font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all tracking-[0.15em] uppercase text-sm shadow-md shadow-uprit-red/20"
+                >
+                  <ShieldCheck size={16} />
+                  Verificar identidad
+                </button>
+              </form>
+            </div>
+
+            <div className="h-px w-full bg-[#C9A227]" />
+            <div className="h-1.5 w-full bg-uprit-red" />
+          </div>
+
+          <p className="text-center text-[10px] text-gray-400 uppercase tracking-widest mt-6">
+            Sistema de validación oficial UPRIT
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const student = diplomasData.find(item => item.registro === normalizedCode);
 
   const studentName = student ? student.nombre : null;
   const diplomaCodeDisplay = student ? student.registro : (normalizedCode || '……-FJEI-2026');
 
-  const pdfUrl = `/diplomado/${diplomaCodeDisplay}.pdf`;
   const isValid = Boolean(student);
+
+  const handleDownload = async () => {
+    setDownloading(true);
+    setDownloadError(false);
+
+    try {
+      const response = await fetch('/api/download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: normalizedCode, dni: dniInput.trim() }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Download failed');
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${diplomaCodeDisplay}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      setDownloadError(true);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#F2EFE9] font-geist flex flex-col items-center py-8 px-4">
@@ -185,14 +342,20 @@ export default function DiplomaView() {
       {/* Botón de descarga */}
       {isValid && (
         <div className="mt-8 mb-12 flex flex-col items-center gap-2">
-          <a
-            href={pdfUrl}
-            download={`${diplomaCodeDisplay}.pdf`}
-            className="bg-uprit-red hover:bg-red-900 text-white font-bold py-3.5 px-10 rounded flex items-center gap-3 transition-all shadow-lg shadow-uprit-red/20 active:scale-[0.97] tracking-[0.15em] uppercase text-sm"
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={downloading}
+            className="bg-uprit-red hover:bg-red-900 disabled:bg-red-900/60 disabled:cursor-wait text-white font-bold py-3.5 px-10 rounded flex items-center gap-3 transition-all shadow-lg shadow-uprit-red/20 active:scale-[0.97] tracking-[0.15em] uppercase text-sm"
           >
             <FileDown size={18} />
-            Descargar PDF Oficial
-          </a>
+            {downloading ? 'Preparando PDF…' : 'Descargar PDF Oficial'}
+          </button>
+          {downloadError && (
+            <p className="text-red-500 text-xs text-center max-w-xs">
+              No se pudo descargar el PDF. Intenta nuevamente.
+            </p>
+          )}
           <p className="text-gray-400 text-[10px] uppercase tracking-widest">
             Documento oficial — Universidad Privada de Trujillo
           </p>

@@ -4,7 +4,7 @@ import Home from './components/Home'
 
 function RedirectToDiploma() {
   const { code } = useParams()
-  const normalizedCode = code?.trim().toUpperCase() ?? ''
+  const normalizedCode = code?.trim().toUpperCase().replace(/\.PDF$/, '') ?? ''
   return <Navigate to={`/fedatario-juramentado/${normalizedCode}`} replace />
 }
 
