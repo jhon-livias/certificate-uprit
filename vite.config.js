@@ -7,7 +7,13 @@ function downloadApiPlugin() {
   return {
     name: 'download-api',
     configureServer(server) {
-      server.middlewares.use('/api/download', handleDownloadRequest)
+      server.middlewares.use((req, res, next) => {
+        if (req.url?.startsWith('/api/download')) {
+          handleDownloadRequest(req, res);
+          return;
+        }
+        next();
+      });
     },
   }
 }

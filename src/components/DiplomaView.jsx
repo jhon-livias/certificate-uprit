@@ -20,6 +20,7 @@ export default function DiplomaView() {
   const [downloading, setDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState(false);
   const inputRef = useRef(null);
+  const verifiedDniRef = useRef('');
 
   useEffect(() => {
     if (code && /\.pdf$/i.test(code.trim())) {
@@ -33,6 +34,7 @@ export default function DiplomaView() {
     const dni = dniInput.trim();
     const hash = await sha256(dni + ':' + normalizedCode);
     if (record && record.dniHash === hash) {
+      verifiedDniRef.current = dni;
       setVerified(true);
       setVerifyError(false);
     } else {
@@ -145,18 +147,33 @@ export default function DiplomaView() {
     setDownloading(true);
     setDownloadError(false);
 
+    const dni = verifiedDniRef.current || dniInput.trim();
+    if (!dni) {
+      setDownloadError(true);
+      setDownloading(false);
+      return;
+    }
+
     try {
       const response = await fetch('/api/download', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: normalizedCode, dni: dniInput.trim() }),
+        body: JSON.stringify({ code: normalizedCode, dni }),
       });
 
-      if (!response.ok) {
-        throw new Error('Download failed');
+      const contentType = response.headers.get('content-type') ?? '';
+      const buffer = await response.arrayBuffer();
+
+      if (!response.ok || !contentType.includes('application/pdf')) {
+        throw new Error('Invalid response');
       }
 
-      const blob = await response.blob();
+      const header = new TextDecoder().decode(new Uint8Array(buffer.slice(0, 4)));
+      if (header !== '%PDF') {
+        throw new Error('Corrupt PDF');
+      }
+
+      const blob = new Blob([buffer], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;

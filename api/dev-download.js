@@ -36,7 +36,7 @@ export function handleDownloadRequest(req, res) {
       return;
     }
 
-    const normalizedCode = payload.code?.trim().toUpperCase() ?? '';
+    const normalizedCode = payload.code?.trim().toUpperCase().replace(/\.PDF$/, '') ?? '';
     const dni = payload.dni?.trim() ?? '';
 
     if (!CODE_PATTERN.test(normalizedCode) || !/^\d{7,12}$/.test(dni)) {
@@ -66,6 +66,7 @@ export function handleDownloadRequest(req, res) {
     const pdf = fs.readFileSync(pdfPath);
     res.statusCode = 200;
     res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Length', pdf.length);
     res.setHeader('Content-Disposition', `attachment; filename="${normalizedCode}.pdf"`);
     res.setHeader('Cache-Control', 'no-store');
     res.end(pdf);
