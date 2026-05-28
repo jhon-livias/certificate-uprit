@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import serverData from '../server-data.json' with { type: 'json' };
@@ -54,11 +55,14 @@ export function validateRequest(payload) {
     return { ok: false, status: 403, error: 'No autorizado' };
   }
 
-  return { ok: true, code, dni, nombre: record.nombre };
+  return { ok: true, code, dni, nombre: record.nombre, hashValidacion: record.hashValidacion };
 }
 
-export function getPdfPath(code) {
-  return path.join(rootDir, 'private', 'diplomado', `${code}.pdf`);
+export function getPdfPath(hashValidacion) {
+  const publicPath = path.join(rootDir, 'public', 'private', 'diplomado', `${hashValidacion}.pdf`);
+  const privatePath = path.join(rootDir, 'private', 'diplomado', `${hashValidacion}.pdf`);
+  if (fs.existsSync(publicPath)) return publicPath;
+  return privatePath;
 }
 
 export function sendJson(res, status, data) {

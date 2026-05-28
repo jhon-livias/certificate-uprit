@@ -16,6 +16,8 @@
  *   - src/data/diplomas.json      → array de { hashValidacion } (va al bundle público)
  *   - api/server-data.json        → mapa registro → { hashValidacion, nombre } (solo servidor)
  *   - public/api/_data.php        → mismo mapa para Apache PHP (solo servidor)
+ *   - Renombra PDFs en public/private/diplomado/ y private/diplomado/
+ *     de {registro}.pdf → {hashValidacion}.pdf
  *
  * Uso:
  *   npm run generate-data
@@ -91,6 +93,40 @@ fs.writeFileSync(
   phpContent,
 );
 
+// ── Renombrar PDFs: {registro}.pdf → {hashValidacion}.pdf ───────────────────
+function renamePdfs(records, pdfDir) {
+  if (!fs.existsSync(pdfDir)) {
+    console.log(`  (omitido, no existe: ${pdfDir})`);
+    return 0;
+  }
+
+  let renamed = 0;
+  for (const { dni, registro, nombre } of records) {
+    const hash = masterHash(dni, registro, nombre);
+    const oldPath = path.join(pdfDir, `${registro}.pdf`);
+    const newPath = path.join(pdfDir, `${hash}.pdf`);
+
+    if (fs.existsSync(newPath)) continue;
+
+    if (fs.existsSync(oldPath)) {
+      fs.renameSync(oldPath, newPath);
+      renamed++;
+    }
+  }
+  return renamed;
+}
+
+const pdfDirs = [
+  path.join(rootDir, 'public', 'private', 'diplomado'),
+  path.join(rootDir, 'private', 'diplomado'),
+];
+
+console.log('\nRenombrando PDFs:');
+for (const dir of pdfDirs) {
+  const count = renamePdfs(source, dir);
+  console.log(`  ${path.relative(rootDir, dir)}: ${count} archivos renombrados`);
+}
+
 // ── Resumen ──────────────────────────────────────────────────────────────────
 console.log(`\n✔ Generados ${clientData.length} hashes maestros:\n`);
 source.forEach(({ dni, registro, nombre }) => {
@@ -104,3 +140,4 @@ console.log('Archivos generados:');
 console.log('  - src/data/diplomas.json   (frontend: solo hashes)');
 console.log('  - api/server-data.json     (servidor Node dev)');
 console.log('  - public/api/_data.php     (servidor Apache)');
+console.log('  - PDFs renombrados a {hashValidacion}.pdf');

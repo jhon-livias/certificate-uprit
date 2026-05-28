@@ -30,5 +30,6 @@ export async function handleVerifyRequest(req, res) {
     ok: true,
     nombre: result.nombre,
     registro: result.code,
+    hashValidacion: result.hashValidacion,
   });
 }

@@ -28,7 +28,7 @@ export async function handleDownloadRequest(req, res) {
     return;
   }
 
-  const pdfPath = getPdfPath(result.code);
+  const pdfPath = getPdfPath(result.hashValidacion);
   if (!fs.existsSync(pdfPath)) {
     sendJson(res, 404, { error: 'PDF no encontrado' });
     return;
