@@ -19,6 +19,9 @@ export default function DiplomaView() {
   const [attempts, setAttempts] = useState(0);
   const [downloading, setDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState(false);
+  const [studentName, setStudentName] = useState('');
+  const [recordExists, setRecordExists] = useState(false);
+  const [verifying, setVerifying] = useState(false);
   const inputRef = useRef(null);
   const verifiedDniRef = useRef('');
 
@@ -28,20 +31,61 @@ export default function DiplomaView() {
     }
   }, [code, normalizedCode, navigate]);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    sha256(normalizedCode).then((registroHash) => {
+      if (!cancelled) {
+        setRecordExists(diplomasData.some((item) => item.registroHash === registroHash));
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [normalizedCode]);
+
   const handleVerify = async (e) => {
     e.preventDefault();
-    const record = diplomasData.find(item => item.registro === normalizedCode);
-    const dni = dniInput.trim();
-    const hash = await sha256(dni + ':' + normalizedCode);
-    if (record && record.dniHash === hash) {
+    setVerifying(true);
+    setVerifyError(false);
+
+    try {
+      const registroHash = await sha256(normalizedCode);
+      const record = diplomasData.find((item) => item.registroHash === registroHash);
+      const dni = dniInput.trim();
+      const hash = await sha256(`${dni}:${normalizedCode}`);
+
+      if (!record || record.dniHash !== hash) {
+        setAttempts((prev) => prev + 1);
+        setVerifyError(true);
+        setDniInput('');
+        setTimeout(() => inputRef.current?.focus(), 50);
+        return;
+      }
+
+      const response = await fetch('/api/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: normalizedCode, dni }),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.ok || !data.nombre) {
+        setAttempts((prev) => prev + 1);
+        setVerifyError(true);
+        setDniInput('');
+        setTimeout(() => inputRef.current?.focus(), 50);
+        return;
+      }
+
       verifiedDniRef.current = dni;
+      setStudentName(data.nombre);
       setVerified(true);
-      setVerifyError(false);
-    } else {
-      setAttempts(prev => prev + 1);
+    } catch {
       setVerifyError(true);
-      setDniInput('');
-      setTimeout(() => inputRef.current?.focus(), 50);
+    } finally {
+      setVerifying(false);
     }
   };
 
@@ -115,11 +159,11 @@ export default function DiplomaView() {
 
                 <button
                   type="submit"
-                  disabled={dniInput.length < 7}
+                  disabled={dniInput.length < 7 || verifying}
                   className="bg-uprit-red hover:bg-red-900 disabled:bg-gray-200 disabled:cursor-not-allowed text-white disabled:text-gray-400 font-bold py-3 px-6 rounded-lg flex items-center justify-center gap-2 transition-all tracking-[0.15em] uppercase text-sm shadow-md shadow-uprit-red/20"
                 >
                   <ShieldCheck size={16} />
-                  Verificar identidad
+                  {verifying ? 'Verificando…' : 'Verificar identidad'}
                 </button>
               </form>
             </div>
@@ -136,12 +180,8 @@ export default function DiplomaView() {
     );
   }
 
-  const student = diplomasData.find(item => item.registro === normalizedCode);
-
-  const studentName = student ? student.nombre : null;
-  const diplomaCodeDisplay = student ? student.registro : (normalizedCode || '……-FJEI-2026');
-
-  const isValid = Boolean(student);
+  const diplomaCodeDisplay = normalizedCode || '……-FJEI-2026';
+  const isValid = recordExists && Boolean(studentName);
 
   const handleDownload = async () => {
     setDownloading(true);

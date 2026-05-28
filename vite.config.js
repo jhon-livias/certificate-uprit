@@ -2,27 +2,31 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { handleDownloadRequest } from './api/dev-download.js'
+import { handleVerifyRequest } from './api/dev-verify.js'
 
-function downloadApiPlugin() {
+function apiPlugin() {
   return {
-    name: 'download-api',
+    name: 'api-plugin',
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         if (req.url?.startsWith('/api/download')) {
-          handleDownloadRequest(req, res);
-          return;
+          handleDownloadRequest(req, res)
+          return
         }
-        next();
-      });
+        if (req.url?.startsWith('/api/verify')) {
+          handleVerifyRequest(req, res)
+          return
+        }
+        next()
+      })
     },
   }
 }
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-    downloadApiPlugin(),
+    apiPlugin(),
   ],
 })

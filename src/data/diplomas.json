@@ -1,122 +1,122 @@
 [
   {
-    "nombre": "ANTÓN DE LA CRUZ JESSICA ELIZABETH",
-    "registro": "001-FJEI-2026",
-    "dniHash": "11fae5a7ec3399aed43b807689006b803d05ee2da5a40ffc7bda13ccdeb68c4a"
+    "registroHash": "f15cda4a834f152df5cc9452c02b787cd5c3a5e9c224193d4e0381bb0db57cf3",
+    "dniHash": "11fae5a7ec3399aed43b807689006b803d05ee2da5a40ffc7bda13ccdeb68c4a",
+    "nombreHash": "cc984708d63b4ddcb163a82fe9c9f43a120a301f94058cee283e065e61beadff"
   },
   {
-    "nombre": "BUSTAMANTE DAZA EDWIN",
-    "registro": "002-FJEI-2026",
-    "dniHash": "d9ac81a6a648ebb3da0f70dc95724cf43aa9a4f98eb54b6df21a24875ecf55c5"
+    "registroHash": "e4a364842dbaa2b4c96b0ca54478c6bfe6660001fe9ab838afeca67586a306bb",
+    "dniHash": "d9ac81a6a648ebb3da0f70dc95724cf43aa9a4f98eb54b6df21a24875ecf55c5",
+    "nombreHash": "36264c3a551c1754c2083ada68461f34a9cc3d12827029d3ce5deb35218f930f"
   },
   {
-    "nombre": "CASTILLO RUJEL JESSICA ANABELLA",
-    "registro": "003-FJEI-2026",
-    "dniHash": "ac56e51c762701b72438e530496ba78c6a6bc70daffa68141e5c63890d8cc780"
+    "registroHash": "40c0c0245fe2540255b1d9846402e58e28884fd70ce9ab884fd7566db8b25034",
+    "dniHash": "ac56e51c762701b72438e530496ba78c6a6bc70daffa68141e5c63890d8cc780",
+    "nombreHash": "428497ee5802d8c16b16b3bc0efdab5fc182f54719a30ae5a5bf88143a617f7d"
   },
   {
-    "nombre": "CHALLCO ARAOZ ANA CLAUDIA",
-    "registro": "004-FJEI-2026",
-    "dniHash": "381729ef25a35b2562d2aebfbb34f82b02522fca557f7dd21abb7fe404b21984"
+    "registroHash": "921f07c45891e523e1d7227348e018cb9aeaae8ea5c837defe4986e23a4666d9",
+    "dniHash": "381729ef25a35b2562d2aebfbb34f82b02522fca557f7dd21abb7fe404b21984",
+    "nombreHash": "1698666606bccc615e0977b064c7c87b4a3bfd0d679a8fdd39b2842cc02dd21e"
   },
   {
-    "nombre": "CONDE MERMA JOSE",
-    "registro": "005-FJEI-2026",
-    "dniHash": "99247bc4bc948640cf0a78aabf642b3da7571dcfb5808d408afd920178ca7744"
+    "registroHash": "0c376f81e6d894aafc9f6bc299009ec54d664c16b87b47ceb1c167f1b313fe33",
+    "dniHash": "99247bc4bc948640cf0a78aabf642b3da7571dcfb5808d408afd920178ca7744",
+    "nombreHash": "44f2b2792c7b03f156bb98ed2de9dd9a78a6209ac915b228cb01fa65491fe506"
   },
   {
-    "nombre": "DOMÍNGUEZ DEZAR AUGUSTO PERCY",
-    "registro": "006-FJEI-2026",
-    "dniHash": "287f526b8746445d13a95746ad012f7d7ae14351ac49f792c53e0df6c2d38791"
+    "registroHash": "6b7ba5805b80999f56191b84de7aceafc522365ffd5cb65643498fd6e107fbe9",
+    "dniHash": "287f526b8746445d13a95746ad012f7d7ae14351ac49f792c53e0df6c2d38791",
+    "nombreHash": "6d8c578029e91942e096b1046f757b6fabd2995ca1e094ea4c4614d8ef74b3a2"
   },
   {
-    "nombre": "DURAND BAZÁN MÓNICA CECILIA",
-    "registro": "007-FJEI-2026",
-    "dniHash": "6d1eded34d380d882e79f602a5acc9e8a45e13352d0755ee668b10c857a9ef69"
+    "registroHash": "f17b5bb73b6e3be745b1bcd6bcb0481489d29656a96f1f7b367e0c62fe05f299",
+    "dniHash": "6d1eded34d380d882e79f602a5acc9e8a45e13352d0755ee668b10c857a9ef69",
+    "nombreHash": "3b7cd05304f7130658c3876afbeef55566909a04ebd3198d3fc452a0fa9e8e77"
   },
   {
-    "nombre": "ESQUICHE VERA IVÁN GILBERTO",
-    "registro": "008-FJEI-2026",
-    "dniHash": "04253a79a7dee0e0b5ecc52ad98f5da7becba6f8cbcbcbf20b629016be01128c"
+    "registroHash": "f4db18e9bf57e7db92b8d663d3e797c526aa912407ccdf3ef0af18ea5fc8e552",
+    "dniHash": "04253a79a7dee0e0b5ecc52ad98f5da7becba6f8cbcbcbf20b629016be01128c",
+    "nombreHash": "a6104cba304150fc6e5c5bdbe07d4c7405608595269616e40bca2c8d7a7501f5"
   },
   {
-    "nombre": "FARFÁN DE LA CRUZ AMELIA ROSARIO",
-    "registro": "009-FJEI-2026",
-    "dniHash": "3fed59882eee7574ebfea506c70d1249a05066287e5eccee25cf737a8a07ce31"
+    "registroHash": "35d1f7b67c1c07c0a7e7d695185c780878e1e96e27ca4c68acb013626324615c",
+    "dniHash": "3fed59882eee7574ebfea506c70d1249a05066287e5eccee25cf737a8a07ce31",
+    "nombreHash": "0971323f89b1c61115db7941da37362ea7827d7e5f7fa923acd3a2d975619e39"
   },
   {
-    "nombre": "GAMBINI RODRIGUEZ ANGELA PAOLA",
-    "registro": "010-FJEI-2026",
-    "dniHash": "f2fad767c5f4a3429c6ca6718a97aad042dc1326f605305e26f78f81b9dd5913"
+    "registroHash": "a89ef1efac97236fc14824048734e57f3f48b43fcaecd0f01b50d551b879ede9",
+    "dniHash": "f2fad767c5f4a3429c6ca6718a97aad042dc1326f605305e26f78f81b9dd5913",
+    "nombreHash": "8b55ded719ac4db5fd73c803846e026264bf2f25156fec8bd160f909be38e1e0"
   },
   {
-    "nombre": "GARCÍA GONZÁLES GILMER DAVID",
-    "registro": "011-FJEI-2026",
-    "dniHash": "ef8b45fb592b69af2e585467399266dd7b555446208203ee83d5187209e04158"
+    "registroHash": "b07c696463348cee79bfc29c3160ebb48a7dd6555717b58d939489161e29e036",
+    "dniHash": "ef8b45fb592b69af2e585467399266dd7b555446208203ee83d5187209e04158",
+    "nombreHash": "d6b9aaf7a6fdf3e0057c2ffdf0ee2e563c507bf130825ae7c8e166898d4a3b9f"
   },
   {
-    "nombre": "HUACLLA GÓMEZ AMALIA JUANA",
-    "registro": "012-FJEI-2026",
-    "dniHash": "9738fa900d50505733d676b09f0d8253b5ae464755bdffa088a5522609391427"
+    "registroHash": "5cf2d513ba5089836cf1e7abc790fe9d1c27938ae75112ff78ef7bdc39ef987a",
+    "dniHash": "9738fa900d50505733d676b09f0d8253b5ae464755bdffa088a5522609391427",
+    "nombreHash": "032f0d62e979860b631c0c8f51bb080c36af38788fcd183f83835c63a94e29a1"
   },
   {
-    "nombre": "JUAREZ MORENO ORLANDO CARLOS",
-    "registro": "013-FJEI-2026",
-    "dniHash": "e264186f1e563154797983732b11f4d46f9fc867a688d1ce69fa326ec32ea3a9"
+    "registroHash": "771c561e903f0b4028eabc6f73b473d6e888f8efc9fadc875dff10fbb7b364fc",
+    "dniHash": "e264186f1e563154797983732b11f4d46f9fc867a688d1ce69fa326ec32ea3a9",
+    "nombreHash": "9acb7097afceae710228e2574736a974528525f310781921ef7494712200286c"
   },
   {
-    "nombre": "LÁZARO JULIAN NÁYADE INDIRA",
-    "registro": "014-FJEI-2026",
-    "dniHash": "7aca83c29ac35ca11c06a1f99ef7a3e64aa0a9efc5da411f4cadc3aaa3e94408"
+    "registroHash": "a583512f7ab52d8a40d71aa975ea8b691c79ed089ad64afe55f0c218b4e1cab1",
+    "dniHash": "7aca83c29ac35ca11c06a1f99ef7a3e64aa0a9efc5da411f4cadc3aaa3e94408",
+    "nombreHash": "a08c4998b7bb158f3688f93f5365d49f4511ecdf232949aab4cf0f4c334ea9bf"
   },
   {
-    "nombre": "LLANTOY MEZA JOSE LUIS",
-    "registro": "015-FJEI-2026",
-    "dniHash": "3f55fad5112346452db64c4080c898b183bf07c46773ca34ccfeebd38ad7bf4c"
+    "registroHash": "b15cdbf8f5fc1dfe629ed985a6dd08f54d2ac09b8dd4f29543a86d3a7d8947a3",
+    "dniHash": "3f55fad5112346452db64c4080c898b183bf07c46773ca34ccfeebd38ad7bf4c",
+    "nombreHash": "58d1d0066da8ed2bf11760a74836f4378382ab8d8ab4e529946501494896f0f5"
   },
   {
-    "nombre": "LOPEZ SENCIA JUANA IRIS",
-    "registro": "016-FJEI-2026",
-    "dniHash": "209d86696b5a860398f86937cd18099fc0ddfc81fb8ed9f2ff92579ef54c6934"
+    "registroHash": "06a0b13e80ef91763fa5d7f5400639bd64af2330f69a3b3d8ba49b7d0d75586c",
+    "dniHash": "209d86696b5a860398f86937cd18099fc0ddfc81fb8ed9f2ff92579ef54c6934",
+    "nombreHash": "48218b26fa6ecf640243a50de44c7e96395e4a2a599e4f118cdeafcc3ee0a591"
   },
   {
-    "nombre": "NECIOSUP FABERICO JOSÉ LUIS",
-    "registro": "017-FJEI-2026",
-    "dniHash": "4bbf79ef885f97d04fdc993822da04717c09fc395bc63b4e1bbeff4cea8026c7"
+    "registroHash": "223f8f8c9494f24f5a51e0af9326904811bcacd3d4d9b61dce001156935d7539",
+    "dniHash": "4bbf79ef885f97d04fdc993822da04717c09fc395bc63b4e1bbeff4cea8026c7",
+    "nombreHash": "b5d12aa5a0a6abd71be6ce644e699f41a8802dc446986b682123f2199b8759ab"
   },
   {
-    "nombre": "ROBLES PAGADOR MARIA EUGENIA",
-    "registro": "018-FJEI-2026",
-    "dniHash": "fac6a83adfe4b6b509a981d67590dcdc3c418fa9ce4a97efc6db7ee7bc3c57c6"
+    "registroHash": "f89c1b74a2e89978768fe746dba4da226d8e924816fd4ad70b46a87fa2cc9057",
+    "dniHash": "fac6a83adfe4b6b509a981d67590dcdc3c418fa9ce4a97efc6db7ee7bc3c57c6",
+    "nombreHash": "680a723dd02269cb64b44687ce6b8537d54fadd69431abb5ae1d8471d544300d"
   },
   {
-    "nombre": "SILVA KUO YING ALFONSO ANTERO",
-    "registro": "019-FJEI-2026",
-    "dniHash": "27a39a204f4a5b431871329df2cf25125b248b6bd11e5ccc33b27412ee70c776"
+    "registroHash": "9f1d97ff7da410a12241a737e5eb4ce1ab6ce7462482b7b1df219445f58ad0f5",
+    "dniHash": "27a39a204f4a5b431871329df2cf25125b248b6bd11e5ccc33b27412ee70c776",
+    "nombreHash": "f75152b8f0eec3673bedb9d563e4008442a37da3b405c21feeebc5c1dc4f23f3"
   },
   {
-    "nombre": "SILVA KUO YING GUSTAVO ANTERO",
-    "registro": "020-FJEI-2026",
-    "dniHash": "c428dac915b2ec5afb04894e1516f30a3949490ee2881f89978cbfcb79d955c8"
+    "registroHash": "f7c6add6b2e533dc4f098b935ed64669684c54e3792419fdadcd78882582eb7a",
+    "dniHash": "c428dac915b2ec5afb04894e1516f30a3949490ee2881f89978cbfcb79d955c8",
+    "nombreHash": "0d0cc623bbe2d85f338188a1aae98fe76e3811f35a44badb63b25e9a3af47c51"
   },
   {
-    "nombre": "VALLE FABERIO WOLFGANG PAUL",
-    "registro": "021-FJEI-2026",
-    "dniHash": "93f16b3091316d4823bc00ab9ec7d86c92ef210479155695c641be2c6e851a15"
+    "registroHash": "fa43ac52fd752e87333b608fde97b058a859f7f1936029659ea84b4119fdcfb0",
+    "dniHash": "93f16b3091316d4823bc00ab9ec7d86c92ef210479155695c641be2c6e851a15",
+    "nombreHash": "4832e52d47c01dfe7b76de96b36eb0177dc7361a951e7045cc91db5887fbc698"
   },
   {
-    "nombre": "VASQUEZ CAMPOS CONSUELO",
-    "registro": "022-FJEI-2026",
-    "dniHash": "a76a7ce005083f604cff3bd6893684be4f0b2d8efb2b2e8fa790f0e2309151cc"
+    "registroHash": "9d495dfafcdc3e31f66ec18788985a7efbd31b121995eebe84094461f3a15a9a",
+    "dniHash": "a76a7ce005083f604cff3bd6893684be4f0b2d8efb2b2e8fa790f0e2309151cc",
+    "nombreHash": "5fcc417f96cda348f6ea36c6ab64f9d619d0d5685bcffb71498ce2c4e832a468"
   },
   {
-    "nombre": "VASQUEZ EVANGELISTA SUSAM MARIBEL",
-    "registro": "023-FJEI-2026",
-    "dniHash": "00ff539bca722367ff7acaa06256acdfa3ae1d2d3961a400a2ddadd495505b64"
+    "registroHash": "3d208463409195dc0b3039749e2e4e74055dbe8106035356ad22a911a83b5271",
+    "dniHash": "00ff539bca722367ff7acaa06256acdfa3ae1d2d3961a400a2ddadd495505b64",
+    "nombreHash": "0984caa9c4c3c74bc492618ba8ee0a4f13901bd24ae4723abce67c835472abf5"
   },
   {
-    "nombre": "VENTURA GONZALEZ CHRISTIAN IVAN",
-    "registro": "024-FJEI-2026",
-    "dniHash": "2b78710ac85e81a2e5a0f996b448bc52c44bb5d1c5554087595beb42bf55e6d9"
+    "registroHash": "5ac6931dcd9944d35222cd3fbc653838c4b05e72b2de04abae7b59483b529dc9",
+    "dniHash": "2b78710ac85e81a2e5a0f996b448bc52c44bb5d1c5554087595beb42bf55e6d9",
+    "nombreHash": "fbc120aef78d7dca4042c6e953f4022769dbd164fc981f0cf6c15d2a46707ec1"
   }
 ]

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "generate-data": "node scripts/generate-diploma-data.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
