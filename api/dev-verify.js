@@ -28,7 +28,7 @@ export async function handleVerifyRequest(req, res) {
 
   sendJson(res, 200, {
     ok: true,
-    nombre: result.record.nombre,
+    nombre: result.nombre,
     registro: result.code,
   });
 }
