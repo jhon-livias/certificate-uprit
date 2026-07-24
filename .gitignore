@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 scripts/diplomas-source.json
+vps/
 
 # Editor directories and files
 .vscode/*

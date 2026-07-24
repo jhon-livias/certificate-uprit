@@ -1,12 +1,20 @@
 Options -Indexes
 RewriteEngine On
-RewriteRule ^download$ download.php [L,QSA]
-RewriteRule ^verify$ verify.php [L,QSA]
+RewriteRule ^download$       download.php       [L,QSA]
+RewriteRule ^verify$         verify.php         [L,QSA]
+RewriteRule ^download-grado$ download-grado.php [L,QSA]
+RewriteRule ^verify-grado$   verify-grado.php   [L,QSA]
 
 # Denegar acceso directo a archivos internos
 <Files "_data.php">
   Require all denied
 </Files>
 <Files "_lib.php">
+  Require all denied
+</Files>
+<Files "_data_grado.php">
+  Require all denied
+</Files>
+<Files "_lib_grado.php">
   Require all denied
 </Files>
