@@ -4,11 +4,11 @@
  * Lee los 4 Excels de uprit-diplomas/data/ y genera los mapeos
  * necesarios para el portal de verificación certificate-uprit.
  *
- * Columnas Excel:
- *   A: PROGRAMA     → programa (se muestra en UI tras verificar)
- *   B: QR           → nombre completo del egresado (solo servidor)
- *   C: DNI          → parte del hash
- *   D: CREAR CODIGO DE BARRAS → registro / code (clave de lookup + parte del hash)
+ * Columnas Excel (flexibles):
+ *   PROGRAMA              → programa (se muestra en UI tras verificar)
+ *   QR | APELLIDOS Y NOMBRES → nombre completo del egresado (solo servidor)
+ *   DNI                   → parte del hash
+ *   CREAR CODIGO DE BARRAS → registro / code (clave de lookup + parte del hash)
  *
  * Hash maestro: SHA-256( normalize(dni) + "|" + normalize(codigo) + "|" + normalize(nombre) )
  * Normalización: trim → lowercase → NFD + quitar diacríticos → colapsar espacios
@@ -48,32 +48,36 @@ function masterHash(dni, codigo, nombre) {
 // ── Normalizar código de barras (mismo criterio que main.py) ─────────────────
 function normalizeCodigo(val) {
   if (val === null || val === undefined) throw new Error('Código de barras vacío');
-  const s = String(val).replace(/\s+/g, '').trim();
-  // Puede llegar en notación científica si Excel lo guardó como float grande
-  const n = Number(s);
-  if (!isNaN(n) && isFinite(n)) return Math.round(n).toString();
-  if (/^\d+$/.test(s)) return s;
-  throw new Error(`Código de barras inválido: ${val}`);
+
+  let s = String(val).replace(/\s+/g, '').trim();
+
+  // Notación científica de Excel (ej. 2.10200112540453165e+17)
+  if (/e/i.test(s)) {
+    const n = Number(s);
+    if (!isNaN(n) && isFinite(n)) s = n.toFixed(0);
+  }
+
+  if (!/^\d+$/.test(s)) throw new Error(`Código de barras inválido: ${val}`);
+  return s;
+}
+
+function findColumn(row, ...candidates) {
+  const keys = Object.keys(row);
+  for (const candidate of candidates) {
+    const key = keys.find(k => k.trim().toUpperCase() === candidate.toUpperCase());
+    if (key) return key;
+  }
+  return null;
 }
 
 // ── Definición de fuentes ────────────────────────────────────────────────────
 const SOURCES = [
-  {
-    file: 'POSGRADO - CREAR CODIGOS.xlsx',
-    tipo: 'posgrado',
-  },
-  {
-    file: 'PREGRADO - CREAR CODIGOS.xlsx',
-    tipo: 'bachiller',
-  },
-  {
-    file: 'SEGUNDA ESPECIALIDAD - CREAR CODIGOS.xlsx',
-    tipo: 'titulo-profesional',
-  },
-  {
-    file: 'SEGUNDA ESPECIALIDAD - CREAR CODIGOS 45 SE.xlsx',
-    tipo: 'titulo-profesional',
-  },
+  { file: 'POSGRADO - CREAR CODIGOS.xlsx',                    tipo: 'posgrado' },
+  { file: '2- MAESTRIAS.xlsx',                                tipo: 'posgrado' },
+  { file: 'PREGRADO - CREAR CODIGOS.xlsx',                     tipo: 'bachiller' },
+  { file: '1-CARPETA.xlsx',                                    tipo: 'bachiller' },
+  { file: 'SEGUNDA ESPECIALIDAD - CREAR CODIGOS.xlsx',         tipo: 'segunda-especialidad' },
+  { file: 'SEGUNDA ESPECIALIDAD - CREAR CODIGOS 45 SE.xlsx',  tipo: 'segunda-especialidad' },
 ];
 
 // ── Leer y procesar Excels ───────────────────────────────────────────────────
@@ -94,14 +98,17 @@ for (const source of SOURCES) {
   const ws   = wb.Sheets[wb.SheetNames[0]];
   const rows = xlsxUtils.sheet_to_json(ws, { defval: '' });
 
-  // Detectar nombre real de la columna de barras (puede tener espacio al final)
-  const sampleRow  = rows[0] ?? {};
-  const barcodeKey = Object.keys(sampleRow).find(
-    k => k.trim().toUpperCase() === 'CREAR CODIGO DE BARRAS',
-  );
+  // Detectar columnas (nombres pueden variar entre archivos)
+  const sampleRow   = rows[0] ?? {};
+  const barcodeKey  = findColumn(sampleRow, 'CREAR CODIGO DE BARRAS');
+  const nombreKey   = findColumn(sampleRow, 'QR', 'APELLIDOS Y NOMBRES');
 
   if (!barcodeKey) {
     console.error(`  ✗ No se encontró columna de barras en ${source.file}`);
+    continue;
+  }
+  if (!nombreKey) {
+    console.error(`  ✗ No se encontró columna de nombre en ${source.file}`);
     continue;
   }
 
@@ -109,7 +116,7 @@ for (const source of SOURCES) {
 
   for (const row of rows) {
     const programa = String(row['PROGRAMA'] ?? '').trim();
-    const nombre   = String(row['QR']       ?? '').trim();
+    const nombre   = String(row[nombreKey]  ?? '').trim();
     const dniRaw   = String(row['DNI']      ?? '').trim();
 
     let codigo;
